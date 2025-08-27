@@ -16,7 +16,6 @@ inputs:
     default: "."
 
 runs:
-  using: "ubuntu-latest"
   steps:
     - name: Install requirements
       shell: bash
