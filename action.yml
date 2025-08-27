@@ -11,7 +11,7 @@ inputs:
     required: true
     default: "public"
   workdir:
-    description: "Working directory inside the container"
+    description: "Working directory for mkdocs"
     required: true
     default: "."
 
@@ -40,7 +40,7 @@ runs:
 
       - name: Build documentation
         shell: bash
-        run: mkdocs build
+        run: mkdocs build -c -d "${{ inputs.output-dir }}" -f "${{ inputs.workdir }}/mkdocs.yml"
 
       - name: Verify output directory exists and is not empty
         shell: bash
