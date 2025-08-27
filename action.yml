@@ -14,12 +14,14 @@ inputs:
     description: "Working directory inside the container"
     required: true
     default: "."
-    
+
 runs:
   using: "ubuntu-latest"
   steps:
     - name: Install requirements
+      shell: bash
       run: pip install -r requirements.txt
 
     - name: Deploy to GitHub Pages
+      shell: bash
       run: mkdocs gh-deploy --force
