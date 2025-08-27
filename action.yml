@@ -39,6 +39,7 @@ runs:
           fi
 
       - name: Build documentation
+        shell: bash
         run: mkdocs build
 
       - name: Verify output directory exists and is not empty
