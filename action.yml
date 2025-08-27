@@ -18,15 +18,41 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Install requirements
-      shell: bash
-      run: |
-        if [[ -f requirements.txt ]]; then
-          pip install -r requirements.txt
-        else
-          pip install mkdocs
-        fi
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
 
-    - name: Deploy to GitHub Pages
-      shell: bash
-      run: mkdocs gh-deploy --force
+      - name: Install requirements
+        shell: bash
+        run: |
+          if [[ -f requirements.txt ]]; then
+            pip install -r requirements.txt
+          else
+            pip install mkdocs
+          fi
+
+          if [[ -x "$(command -v mkdocs)" ]]; then
+            echo "MkDocs is installed"
+          else
+            echo "MkDocs is not installed"
+            exit 1
+          fi
+
+      - name: Build documentation
+        run: mkdocs build
+
+      - name: Verify output directory exists and is not empty
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d "${{ inputs.output-dir }}"
+          test -n "$(ls -A "${{ inputs.output-dir }}")" || { echo "Output dir is empty"; exit 1; }
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ inputs.output-dir }}
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
