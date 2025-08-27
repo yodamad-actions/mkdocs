@@ -16,6 +16,7 @@ inputs:
     default: "."
 
 runs:
+  using: "composite"
   steps:
     - name: Install requirements
       shell: bash
