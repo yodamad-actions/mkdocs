@@ -22,7 +22,7 @@ permissions:
 | Input | Description | Default value |
 |-------|-------------|---------------|
 | output-dir | Directory containing the static site output | public |
-| workdir | Directory containing `main.sdf` slidesk file | . |
+| workdir | Directory containing `mkdocs.yml` file | . |
 
 ## Samples
 
@@ -41,7 +41,7 @@ permissions:
   id-token: write    # required by deploy-pages
 
 jobs:
-  slidesk:
+  mkdocs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -66,7 +66,7 @@ permissions:
   id-token: write    # required by deploy-pages
 
 jobs:
-  slidesk:
+  mkdocs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
